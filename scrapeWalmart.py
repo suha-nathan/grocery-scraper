@@ -2,43 +2,26 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import re
 import requests
-"""
-Categories of interes:
 
-Walmart -> Grocery:
-Fruits and vegetables
-Dairy and eggs
-Meat and seafood
 
-Superstore:
-https://api.pcexpress.ca/pcx-bff/api/v1/products/search
-
-Fruits and vegetables
-Dairy and eggs
-Meat 
-Fish and seafood
-Frozen Food -> Frozen Fruits and vegetables, Frozen Meat and Seafood
-
-Costco -> Grocery and Household
-Meat 
-Poultry
-Seafood
-
-X fresh vegetables 
-X fresh meat/seafood. only prepackaged
+import requests
+from bs4 import BeautifulSoup
+session = requests.Session()
+headers = {
+    'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5)'
+    'AppleWebKit 537.36 (KHTML, like Gecko) Chrome',
+    'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'}
+url = 'https://www.walmart.ca/en'
+req = session.get(url, headers=headers)
+bs = BeautifulSoup(req.text, 'html.parser')
+# print(bs.find('table', {'class':'table-striped'}).get_text)
 
 """
+Mobile user agent:
+User-Agent:Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X)
+AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257
+Safari/9537.53
 
-# html = urlopen("https://www.walmart.ca/en/browse/grocery/meat-seafood-alternatives/fresh-chicken-turkey/10019_6000194327357_6000194327409?icid=landing/cp_page_grocery_shop_all_chicken_17000_1MS64GM8BT")
-# bs = BeautifulSoup(html.read(), "html.parser")
-
-# print(bs)
-
-headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:39.0)'}
-url= "https://www.controlleremea.co.uk/"
-
-html_page = requests.get(url, headers=headers)
-
-bs  = BeautifulSoup (html_page.text, 'html.parser')
-
-print(bs)
+Cookies:
+https://www.editthiscookie.com/
+"""
