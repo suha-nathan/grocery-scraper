@@ -24,13 +24,13 @@ service = Service(driver_path)
 
 driver = webdriver.Chrome(service=service, options=chrome_options) 
 """
-driver = uc.Chrome()
+# driver = uc.Chrome()
 
-# driver = webdriver.Chrome()
-# file_path = os.path.abspath("./offline-testing/Online Shopping Canada_ Everyday Low Prices at Walmart.ca!.html")
-# file_url = f"file:///{file_path}"
-driver.get("https://www.walmart.ca/en")
-# driver.get(file_url)
+driver = webdriver.Chrome()
+file_path = os.path.abspath("./offline-testing/Online Shopping Canada_ Everyday Low Prices at Walmart.ca!.html")
+file_url = f"file:///{file_path}"
+# driver.get("https://www.walmart.ca/en")
+driver.get(file_url)
 
 time.sleep(6)
 
