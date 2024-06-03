@@ -1,7 +1,7 @@
 import os
 import time
 import random
-# import undetected_chromedriver as uc
+import undetected_chromedriver as uc
 from selenium import webdriver
 from dotenv import load_dotenv
 from selenium.webdriver.chrome.service import Service
@@ -24,26 +24,25 @@ service = Service(driver_path)
 
 driver = webdriver.Chrome(service=service, options=chrome_options) 
 """
-# driver = uc.Chrome()
+driver = uc.Chrome()
 
-driver = webdriver.Chrome()
-file_path = os.path.abspath("./offline-testing/Online Shopping Canada_ Everyday Low Prices at Walmart.ca!.html")
-file_url = f"file:///{file_path}"
-# driver.get("https://www.walmart.ca/en")
-driver.get(file_url)
+# driver = webdriver.Chrome()
+# file_path = os.path.abspath("./offline-testing/Online Shopping Canada_ Everyday Low Prices at Walmart.ca!.html")
+# file_url = f"file:///{file_path}"
+driver.get("https://www.walmart.ca/en")
+# driver.get(file_url)
 
-time.sleep(3)
+time.sleep(6)
 
 try:
-    # button = WebDriverWait(driver,10).until(EC.presence_of_element_located(By.XPATH, "//button[text()='Departments']"))
-    button = driver.find_element(By.XPATH, "//button[text()='Departments']")
-    print("button found: ",button)
+    button = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH, "//button[text()='Departments']"))) 
+    # button = driver.find_element(By.XPATH, "//button[text()='Departments']")
     button.click()
     print("Button clicked successfully")
 
 except Exception as e:
     print(f"an error occured: {e}")
-    time.sleep(10)
+    time.sleep(5)
 finally:
-    time.sleep(10)
+    time.sleep(5)
     driver.quit()
