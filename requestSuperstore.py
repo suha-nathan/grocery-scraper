@@ -6,10 +6,13 @@ import time
 from dotenv import load_dotenv
 from playwright.sync_api import sync_playwright
 
+#https://api.pcexpress.ca/pcx-bff/api/v2/slug/homepage-refresh
+
 load_dotenv()
 
-def get_cookie():
-    with sync_playwright as p:
+def get_cookies():
+    # variables stored in local storage and not as cookies. playwright evaluate() https://playwright.dev/python/docs/evaluating
+    with sync_playwright() as p:
         browser = p.chromium.launch()
         context = browser.new_context()
         page = context.new_page()
@@ -48,9 +51,12 @@ def send_request(cart_id, domain_id, session_id):
     })
 
     response = requests.request("POST", reqUrl, data=payload,  headers=headersList)
+    return response.json()
 
-# if __name__ == '__main__':
-#     cookie = get_cookie()
-#     send_request(os.getenv("S_CART_ID"), os.getenv("S_DOMAIN_ID"), os.getenv("S_SESSION_ID"))# lcl-cart-id-banner,# sp_domain_userid, sp_domain_sessionid
-
-print(get_cookie())
+if __name__ == '__main__':
+    cookies = get_cookies()
+    file = open("superstore-cookies.py","w")
+    file.write(f"cookie_data={cookies.json()}")
+    file.close()
+    # send_request(os.getenv("S_CART_ID"), os.getenv("S_DOMAIN_ID"), os.getenv("S_SESSION_ID"))
+    # local storage -> lcl-cart-id-banner,# sp_domain_userid, sp_domain_sessionid
