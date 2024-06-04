@@ -2,6 +2,7 @@ import requests
 import json
 import requests
 import os
+import time
 from dotenv import load_dotenv
 from playwright.sync_api import sync_playwright
 
@@ -14,10 +15,11 @@ def get_cookie():
         page = context.new_page()
         page.goto("https://www.realcanadiansuperstore.ca/")
         cookies = context.cookies()
+        context.close()
         browser.close()
     return cookies
 
-def send_request():
+def send_request(cart_id, domain_id, session_id):
     reqUrl = "https://api.pcexpress.ca/pcx-bff/api/v1/products/search"
 
     headersList = {
@@ -31,7 +33,7 @@ def send_request():
         "size": 48
     },
     "banner": "superstore",
-    "cartId": os.getenv("S_CART_ID"), # lcl-cart-id-banner
+    "cartId": cart_id, 
     "lang": "en",
     "date": "03062024", # change this every day
     "storeId": "1077",
@@ -40,11 +42,15 @@ def send_request():
     "offerType": "ALL",
     "term": "beef", #search query
     "userData": {
-        "domainUserId": os.getenv("S_DOMAIN_ID") , # sp_domain_userid
-        "sessionId": os.getenv("S_SESSION_ID") # sp_domain_sessionid
+        "domainUserId": domain_id , 
+        "sessionId": session_id
     }
     })
 
     response = requests.request("POST", reqUrl, data=payload,  headers=headersList)
+
+# if __name__ == '__main__':
+#     cookie = get_cookie()
+#     send_request(os.getenv("S_CART_ID"), os.getenv("S_DOMAIN_ID"), os.getenv("S_SESSION_ID"))# lcl-cart-id-banner,# sp_domain_userid, sp_domain_sessionid
 
 print(get_cookie())
